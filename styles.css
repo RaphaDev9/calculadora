@@ -1,59 +1,113 @@
-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f5f5f5;
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+body{
+    background-color: #0E0E0E;
+    margin: auto;
 }
 
-#calculadora {
-    width: 200px;
-    background-color: #fff;
-    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
+.cl-1 {
+    height: 30vh;
 }
 
-#display {
-    width: 100%;
-    height: 50px;
-    border-bottom: 1px solid #ccc;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0 10px;
-    box-sizing: border-box;
+.cl-2 {
+    height: 70vh;
 }
 
-#displayInput {
-    text-align: center;
-    border: 0;
-    width: 100%;
-}
-
-#teclado {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-}
+/* button */
 
 button {
-    height: 60px;
     border: 0;
-    font-size: 2rem;
-    transition: .3s;
-    cursor: pointer;
+    border-radius: 100%;
+    height: 75px;
+    width: 75px;
+    font-weight: 500;
+    font-size: 4vh;
+    padding: 0;
 }
 
 button:hover {
-    background-color: #c6c6c6;
+    opacity: 0.8;
+    transition: 0.7s;
 }
 
-.num,
-.ponto,
-.igual {
-    color: #333;
+.light-gray {
+    background-color: #A6A6A6;
+    color: #000;
 }
 
-.operador{
-    color: #f7931b;
+.dark-gray {
+    background-color: #333333;
+    color: #fff;
+}
+
+.orange {
+    background-color: #FF9500;
+    color: #fff;
+}
+
+.large {
+    width: 155px;
+    border-radius: 50px;
+    text-align: left;
+    padding-left: 25px;
+}
+
+/* input */
+
+input:focus-visible {
+    outline-offset: unset;
+}
+
+:focus-visible {
+    outline: unset;
+}
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+/* container */
+
+.container-cal {
+    margin: auto;
+    height: 100vh;
+    width: 25vw;
+    background-color: #000;
+    align-content: end;
+}
+
+.linha-2, .linha-3, .linha-4, .linha-5 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+    max-width: 95%;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.linha-6 {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    justify-items: center;
+    max-width: 95%;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+/* linha 1 */
+
+.linha-1 {
+    height: 100%;
+    padding: 10px;
+    align-content: end;
+    box-sizing: border-box;
+}
+
+.linha-1 input#display {
+    background-color: transparent;
+    color: #fff;
+    border: unset;
+    width: 100%;
+    height: 13vh;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    font-size: 10vh;
 }
