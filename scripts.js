@@ -3,11 +3,6 @@
 function selecao(e){
     let valor = '';
     valor = e.target.textContent;
-    if(valor == ","){
-        console.log("virgula")
-        valor = ".";
-    }
-
     numAnterior(valor);
 }
 
@@ -21,6 +16,14 @@ numeros.forEach(num => {
 let numerais = '';
 
 function numAnterior(num){
+
+    if (num === ",") {
+        // Se já houver um ponto decimal na string numerais, não adiciona outro
+        if (numerais.includes(",")) {
+            return;
+        }
+    }
+
     numerais = numerais + num
     let inputDisplay = document.getElementById("display");
     inputDisplay.value = numerais;
