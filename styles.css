@@ -111,3 +111,10 @@ input[type=number]::-webkit-inner-spin-button {
     text-align: right;
     font-size: 10vh;
 }
+
+/* historico */
+
+p#historico {
+    color: #fff;
+    text-align: right;
+}
