@@ -75,9 +75,14 @@ function atualizarHistorico(his){
     historico.innerHTML = his;
 }
 
-/* resultado */
+/* resultado */ 
 
-function resultado(){
-    
+function result(){
+    operacao = operacao + numerais;
+    atualizarHistorico(operacao);
+    limpaDisplay();
+    console.log(typeof operacao, operacao);
+    operacao = Number(operacao);
+    console.log(typeof operacao, operacao);
 }
 
