@@ -6,12 +6,12 @@ function selecao(e){
     let valor = '';
     valor = e.target.textContent;
     numAnterior(valor);
-}
+};
 
 const numeros = document.querySelectorAll(".num, .virgula");
 numeros.forEach(num => {
     num.addEventListener("click", selecao);
-})
+});
 
 /* guardar número anterior e inserir no display */
 
@@ -23,41 +23,99 @@ function numAnterior(num){
         // se já houver um ponto decimal na string numerais, não adiciona outro
         if (numerais.includes(",")) {
             return;
-        }
-    }
+        };
+    };
 
-    numerais = numerais + num
+    numerais = numerais + num;
     inputDisplay.value = numerais;
-}
+};
 
 /* botão reset */
 
 function reset(){
-    numerais = ''
+    numerais = '';
+    operacao = '';
     inputDisplay.value = '';
     let historico = document.querySelector("#historico");
     historico.innerHTML = '';
-}
+};
 
 /* limpar display */
 
 function limpaDisplay(){
     numerais = ''
     inputDisplay.value = '';
-}
+};
 
 /* operações */
 
-let operacao = '';
+function conta(cont){
+    if (cont.includes("+")){
+        console.log("soma");
+        soma(cont);
+    } else if (cont.includes("-")){
+        console.log("subtração");
+        sub(cont);
+    } else if (cont.includes("x")){
+        console.log("multiplicação");
+        multi(cont);
+    } else if (cont.includes("÷")){
+        console.log("subtração");
+        divi(cont);
+    }
+};
+
+function soma(cont){
+    contSplit = cont.split("+");
+    console.log(contSplit);
+    contSplit[0] = Number(contSplit[0]);
+    contSplit[1] = Number(contSplit[1]);
+    let resultado = contSplit[0] + contSplit[1];
+    console.log(resultado);
+    atualizarResultado(cont, resultado);
+}
+
+function sub(cont){
+    contSplit = cont.split("-");
+    console.log(contSplit);
+    contSplit[0] = Number(contSplit[0]);
+    contSplit[1] = Number(contSplit[1]);
+    let resultado = contSplit[0] - contSplit[1];
+    console.log(resultado);
+    atualizarResultado(cont, resultado);
+}
+
+function multi(cont){
+    console.log(cont);
+    contSplit = cont.split("x");
+    console.log(contSplit);
+    contSplit[0] = Number(contSplit[0]);
+    contSplit[1] = Number(contSplit[1]);
+    let resultado = contSplit[0] * contSplit[1];
+    console.log(resultado);
+    atualizarResultado(cont, resultado);
+}
+
+function divi(cont){
+    contSplit = cont.split("÷");
+    console.log(contSplit);
+    contSplit[0] = Number(contSplit[0]);
+    contSplit[1] = Number(contSplit[1]);
+    let resultado = contSplit[0] / contSplit[1];
+    console.log(resultado);
+    atualizarResultado(cont, resultado);
+}
 
 /* salvar operador */
 
 const op = document.querySelectorAll(".operador");
 op.forEach(op => {
     op.addEventListener("click", atualizarDisplay);
-})
+});
 
 /* atualizar display */
+
+let operacao = '';
 
 function atualizarDisplay(o){
     let op = '';
@@ -65,14 +123,24 @@ function atualizarDisplay(o){
     operacao = operacao + numerais + op;
     limpaDisplay();
     atualizarHistorico(operacao);
-    console.log(operacao);
-}
+    console.log("Atualizar display", operacao);
+};
 
 /* atualizar historico */
 
 function atualizarHistorico(his){
     let historico = document.querySelector("#historico");
     historico.innerHTML = his;
+};
+
+/* atualizar resultado */
+
+function atualizarResultado(cont, result){
+    atualizarHistorico(cont);
+    let resultado = String(result);
+    inputDisplay.value = resultado;
+    operacao = resultado;
+    console.log("Atualizar resultado", resultado);
 }
 
 /* resultado */ 
@@ -81,8 +149,6 @@ function result(){
     operacao = operacao + numerais;
     atualizarHistorico(operacao);
     limpaDisplay();
-    console.log(typeof operacao, operacao);
-    operacao = Number(operacao);
-    console.log(typeof operacao, operacao);
-}
+    conta(operacao);
+};
 
