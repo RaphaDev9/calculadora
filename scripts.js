@@ -51,58 +51,45 @@ function limpaDisplay(){
 
 function conta(cont){
     if (cont.includes("+")){
-        console.log("soma");
         soma(cont);
     } else if (cont.includes("-")){
-        console.log("subtração");
         sub(cont);
     } else if (cont.includes("x")){
-        console.log("multiplicação");
         multi(cont);
     } else if (cont.includes("÷")){
-        console.log("subtração");
         divi(cont);
     }
 };
 
 function soma(cont){
     contSplit = cont.split("+");
-    console.log(contSplit);
     contSplit[0] = Number(contSplit[0]);
     contSplit[1] = Number(contSplit[1]);
     let resultado = contSplit[0] + contSplit[1];
-    console.log(resultado);
     atualizarResultado(cont, resultado);
 }
 
 function sub(cont){
     contSplit = cont.split("-");
-    console.log(contSplit);
     contSplit[0] = Number(contSplit[0]);
     contSplit[1] = Number(contSplit[1]);
     let resultado = contSplit[0] - contSplit[1];
-    console.log(resultado);
     atualizarResultado(cont, resultado);
 }
 
 function multi(cont){
-    console.log(cont);
     contSplit = cont.split("x");
-    console.log(contSplit);
     contSplit[0] = Number(contSplit[0]);
     contSplit[1] = Number(contSplit[1]);
     let resultado = contSplit[0] * contSplit[1];
-    console.log(resultado);
     atualizarResultado(cont, resultado);
 }
 
 function divi(cont){
     contSplit = cont.split("÷");
-    console.log(contSplit);
     contSplit[0] = Number(contSplit[0]);
     contSplit[1] = Number(contSplit[1]);
     let resultado = contSplit[0] / contSplit[1];
-    console.log(resultado);
     atualizarResultado(cont, resultado);
 }
 
@@ -123,7 +110,6 @@ function atualizarDisplay(o){
     operacao = operacao + numerais + op;
     limpaDisplay();
     atualizarHistorico(operacao);
-    console.log("Atualizar display", operacao);
 };
 
 /* atualizar historico */
@@ -140,7 +126,6 @@ function atualizarResultado(cont, result){
     let resultado = String(result);
     inputDisplay.value = resultado;
     operacao = resultado;
-    console.log("Atualizar resultado", resultado);
 }
 
 /* resultado */ 
