@@ -13,7 +13,7 @@ numeros.forEach(num => {
     num.addEventListener("click", selecao);
 });
 
-/* guardar número anterior e inserir no display */
+// guardar número anterior e inserir no display
 
 let numerais = '';
 
@@ -30,7 +30,7 @@ function numAnterior(num){
     inputDisplay.value = numerais;
 };
 
-/* botão reset */
+// botão reset
 
 function reset(){
     numerais = '';
@@ -40,14 +40,14 @@ function reset(){
     historico.innerHTML = '';
 };
 
-/* limpar display */
+// limpar display
 
 function limpaDisplay(){
     numerais = ''
     inputDisplay.value = '';
 };
 
-/* operações */
+// operações
 
 function conta(cont){
     if (cont.includes("+")){
@@ -105,6 +105,14 @@ op.forEach(op => {
 let operacao = '';
 
 function atualizarDisplay(o){
+
+    // verificar se tem algum número digitado ao clicar em um operador
+
+    if(inputDisplay.value == ''){
+        alert("Campo vazio, digite um número");
+        return;
+    }
+
     let op = '';
     op = o.target.textContent;
     operacao = operacao + numerais + op;
@@ -136,4 +144,3 @@ function result(){
     limpaDisplay();
     conta(operacao);
 };
-
