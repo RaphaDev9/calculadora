@@ -63,32 +63,33 @@ function conta(cont){
 
 function soma(cont){
     contSplit = cont.split("+");
-    contSplit[0] = Number(contSplit[0]);
-    contSplit[1] = Number(contSplit[1]);
+    contSplit[0] = Number(contSplit[0].replace(",", "."));
+    contSplit[1] = Number(contSplit[1].replace(",", "."));
+    console.log(contSplit[0], contSplit[1]);
     let resultado = contSplit[0] + contSplit[1];
     atualizarResultado(cont, resultado);
 }
 
 function sub(cont){
     contSplit = cont.split("-");
-    contSplit[0] = Number(contSplit[0]);
-    contSplit[1] = Number(contSplit[1]);
+    contSplit[0] = Number(contSplit[0].replace(",", "."));
+    contSplit[1] = Number(contSplit[1].replace(",", "."));
     let resultado = contSplit[0] - contSplit[1];
     atualizarResultado(cont, resultado);
 }
 
 function multi(cont){
     contSplit = cont.split("x");
-    contSplit[0] = Number(contSplit[0]);
-    contSplit[1] = Number(contSplit[1]);
+    contSplit[0] = Number(contSplit[0].replace(",", "."));
+    contSplit[1] = Number(contSplit[1].replace(",", "."));
     let resultado = contSplit[0] * contSplit[1];
     atualizarResultado(cont, resultado);
 }
 
 function divi(cont){
     contSplit = cont.split("÷");
-    contSplit[0] = Number(contSplit[0]);
-    contSplit[1] = Number(contSplit[1]);
+    contSplit[0] = Number(contSplit[0].replace(",", "."));
+    contSplit[1] = Number(contSplit[1].replace(",", "."));
     let resultado = contSplit[0] / contSplit[1];
     atualizarResultado(cont, resultado);
 }
@@ -131,7 +132,7 @@ function atualizarHistorico(his){
 
 function atualizarResultado(cont, result){
     atualizarHistorico(cont);
-    let resultado = String(result);
+    let resultado = String(result).replace(".", ',');
     inputDisplay.value = resultado;
     operacao = resultado;
 }
