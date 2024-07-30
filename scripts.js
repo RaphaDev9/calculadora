@@ -2,16 +2,16 @@
 
 let inputDisplay = document.getElementById("display");
 
+const numeros = document.querySelectorAll(".num, .virgula");
+numeros.forEach(num => {
+    num.addEventListener("click", selecao);
+});
+
 function selecao(e){
     let valor = '';
     valor = e.target.textContent;
     numAnterior(valor);
 };
-
-const numeros = document.querySelectorAll(".num, .virgula");
-numeros.forEach(num => {
-    num.addEventListener("click", selecao);
-});
 
 // guardar número anterior e inserir no display
 
@@ -62,18 +62,29 @@ function conta(cont){
 };
 
 function soma(cont){
-    contSplit = cont.split("+");
+    let contSplit = cont.split("+");
     contSplit[0] = Number(contSplit[0].replace(",", "."));
     contSplit[1] = Number(contSplit[1].replace(",", "."));
-    console.log(contSplit[0], contSplit[1]);
     let resultado = contSplit[0] + contSplit[1];
     atualizarResultado(cont, resultado);
 }
 
 function sub(cont){
-    contSplit = cont.split("-");
-    contSplit[0] = Number(contSplit[0].replace(",", "."));
-    contSplit[1] = Number(contSplit[1].replace(",", "."));
+    let contSplit = [];
+    let sinalSub = '-';
+    let primeiro = cont.indexOf(sinalSub);
+    let segundo = cont.indexOf(sinalSub, primeiro + 1);
+
+    if (segundo !== -1) {
+        let num1 = cont.substring(0, segundo);
+        let num2 = cont.substring(segundo + 1);
+        contSplit[0] = Number(num1.replace(",", "."));
+        contSplit[1] = Number(num2.replace(",", "."));
+    } else {
+        contSplit = cont.split("-");
+        contSplit[0] = Number(contSplit[0].replace(",", "."));
+        contSplit[1] = Number(contSplit[1].replace(",", "."));
+    }
     let resultado = contSplit[0] - contSplit[1];
     atualizarResultado(cont, resultado);
 }
@@ -101,7 +112,7 @@ op.forEach(op => {
     op.addEventListener("click", atualizarDisplay);
 });
 
-/* atualizar display */
+// atualizar display
 
 let operacao = '';
 
@@ -121,14 +132,14 @@ function atualizarDisplay(o){
     atualizarHistorico(operacao);
 };
 
-/* atualizar historico */
+// atualizar historico
 
 function atualizarHistorico(his){
     let historico = document.querySelector("#historico");
     historico.innerHTML = his;
 };
 
-/* atualizar resultado */
+// atualizar resultado
 
 function atualizarResultado(cont, result){
     atualizarHistorico(cont);
@@ -137,11 +148,21 @@ function atualizarResultado(cont, result){
     operacao = resultado;
 }
 
-/* resultado */ 
+// resultado
 
 function result(){
     operacao = operacao + numerais;
     atualizarHistorico(operacao);
     limpaDisplay();
     conta(operacao);
+    console.log("result", operacao);
 };
+
+// inverter sinal
+
+function invertSinal(){
+    let numInvert = "-" + inputDisplay.value;
+    inputDisplay.value = numInvert;
+    numerais = numInvert;
+}
+
