@@ -1,5 +1,7 @@
-// selecione os números
+let operacao = '';
+let numerais = '';
 
+// selecione os números
 let inputDisplay = document.getElementById("display");
 
 const numeros = document.querySelectorAll(".num, .virgula");
@@ -14,9 +16,6 @@ function selecao(e){
 };
 
 // guardar número anterior e inserir no display
-
-let numerais = '';
-
 function numAnterior(num){
 
     if (num === ",") {
@@ -31,7 +30,6 @@ function numAnterior(num){
 };
 
 // botão reset
-
 function reset(){
     numerais = '';
     operacao = '';
@@ -41,35 +39,36 @@ function reset(){
 };
 
 // limpar display
-
 function limpaDisplay(){
     numerais = ''
     inputDisplay.value = '';
+    console.log("display limpo");
 };
 
 // operações
-
-function conta(cont){
+function conta(cont, segundOp){
     if (cont.includes("+")){
-        soma(cont);
+        soma(cont, segundOp);
     } else if (cont.includes("-")){
-        sub(cont);
+        sub(cont, segundOp);
     } else if (cont.includes("x")){
-        multi(cont);
+        multi(cont, segundOp);
     } else if (cont.includes("÷")){
-        divi(cont);
+        divi(cont, segundOp);
     }
 };
 
-function soma(cont){
+function soma(cont, segundOp){
     let contSplit = cont.split("+");
     contSplit[0] = Number(contSplit[0].replace(",", "."));
     contSplit[1] = Number(contSplit[1].replace(",", "."));
     let resultado = contSplit[0] + contSplit[1];
-    atualizarResultado(cont, resultado);
+    console.log("conta soma: ", resultado);
+    atualizarResultado(cont, resultado, segundOp);
 }
 
-function sub(cont){
+function sub(cont, segundOp){
+    // lidando com números negativos
     let contSplit = [];
     let sinalSub = '-';
     let primeiro = cont.indexOf(sinalSub);
@@ -84,85 +83,110 @@ function sub(cont){
         contSplit = cont.split("-");
         contSplit[0] = Number(contSplit[0].replace(",", "."));
         contSplit[1] = Number(contSplit[1].replace(",", "."));
-    }
+    } 
+    //
     let resultado = contSplit[0] - contSplit[1];
-    atualizarResultado(cont, resultado);
+    atualizarResultado(cont, resultado, segundOp);
 }
 
-function multi(cont){
+function multi(cont, segundOp){
     contSplit = cont.split("x");
     contSplit[0] = Number(contSplit[0].replace(",", "."));
     contSplit[1] = Number(contSplit[1].replace(",", "."));
     let resultado = contSplit[0] * contSplit[1];
-    atualizarResultado(cont, resultado);
+    atualizarResultado(cont, resultado, segundOp);
 }
 
-function divi(cont){
+function divi(cont, segundOp){
     contSplit = cont.split("÷");
     contSplit[0] = Number(contSplit[0].replace(",", "."));
     contSplit[1] = Number(contSplit[1].replace(",", "."));
     let resultado = contSplit[0] / contSplit[1];
-    atualizarResultado(cont, resultado);
+    atualizarResultado(cont, resultado, segundOp);
 }
 
-/* salvar operador */
-
+// salvar operador
 const op = document.querySelectorAll(".operador");
 op.forEach(op => {
-    op.addEventListener("click", atualizarDisplay);
+    op.addEventListener("click", continuarCalculo);
 });
 
 // atualizar display
-
-let operacao = '';
-
-function atualizarDisplay(o){
+function atualizarDisplay(){
 
     // verificar se tem algum número digitado ao clicar em um operador
-
     if(inputDisplay.value == ''){
         alert("Campo vazio, digite um número");
         return;
     }
-
-    let op = '';
-    op = o.target.textContent;
-    operacao = operacao + numerais + op;
     limpaDisplay();
     atualizarHistorico(operacao);
 };
 
 // atualizar historico
-
-function atualizarHistorico(his){
+function atualizarHistorico(his, resultado, segundOp){
     let historico = document.querySelector("#historico");
-    historico.innerHTML = his;
+
+    if(!segundOp){
+        console.log("segundo não existe");
+        historico.innerHTML = his;
+    } else{
+        historico.innerHTML = resultado + segundOp;
+        console.log("segundo existe");
+    }
 };
 
 // atualizar resultado
+function atualizarResultado(cont, resultado, segundOp){
+    let result = String(resultado).replace(".", ',');
+    atualizarHistorico(cont, result, segundOp);
 
-function atualizarResultado(cont, result){
-    atualizarHistorico(cont);
-    let resultado = String(result).replace(".", ',');
-    inputDisplay.value = resultado;
-    operacao = resultado;
+    if(!segundOp){
+        console.log('segundo operador não existe')
+        inputDisplay.value = result;
+        operacao = result; 
+    } else{
+        console.log('segundo operador existe', segundOp);
+        operacao = resultado + segundOp;
+        console.log("BBBB", operacao);
+    }
 }
 
 // resultado
-
-function result(){
+function resultado(){
     operacao = operacao + numerais;
     atualizarHistorico(operacao);
     limpaDisplay();
     conta(operacao);
-    console.log("result", operacao);
+    console.log("resultado", operacao);
 };
 
 // inverter sinal
-
 function invertSinal(){
     let numInvert = "-" + inputDisplay.value;
     inputDisplay.value = numInvert;
     numerais = numInvert;
 }
 
+// fazer o cálculo caso clicar novamente em um operador
+function continuarCalculo(o){
+    console.log("AAA", operacao);
+    let operador = o.target.textContent;
+    operacaoSemSinal = operacao + numerais;
+    operacao = operacao + numerais + operador;
+    let primeiroSinal = operacao.indexOf(operador);
+    let segundoSinal = operacao.indexOf(operador, primeiroSinal + 1);
+    console.log('operação sem sinal: ', operacaoSemSinal);
+    console.log("SINAL", segundoSinal);
+    if(segundoSinal !== -1){
+        console.log("CONTINUAR CALCULO");
+        conta(operacaoSemSinal, operador);
+        limpaDisplay();
+    } else{
+        atualizarDisplay(operador);
+    }
+}
+
+// ajustar cálculo ao clicar no operador
+
+// adicionar as functions de conta o sinal como argumento para diminuir o número de linhas e ficar mais dinâmico
